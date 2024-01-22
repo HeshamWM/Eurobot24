@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:macro name="roue_mecanum" params="name *origin">
+        <!-- Joint to connect the mecanum wheel to a robot (you will need to adjust this) -->
+        <joint name="${name}_joint" type="continuous">
+            <parent link="base_link"/>
+            <child link="${name}_link"/>
+            <xacro:insert_block name="origin"/> <!-- This will insert the origin block --> 
+            <axis xyz="0 1 0"/> <!-- Axis of rotation for the wheel -->
+        </joint>
+        
+        <!-- Mecanum Wheel Link -->
+        <link name="${name}_link">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>               
+                <geometry>
+                    <cylinder length="${mecanum_length}" radius="${mecanum_radius}"/> <!-- dimensions -->
+                </geometry>
+                <material name="black"/>
+            </visual>
+            
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/>               
+                <geometry>
+                    <cylinder length="${mecanum_length}" radius="${mecanum_radius}"/> <!-- dimensions -->
+                </geometry>
+            </collision>
+            
+            <xacro:inertial_cylinder mass="${mecanum_mass}" length="${mecanum_length}" radius="${mecanum_radius}">
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+            </xacro:inertial_cylinder>
+            
+        </link>
+
+        <gazebo reference="${name}_link">
+            <material>Gazebo/Black</material>
+            <mu1 value="1"/> <!-- Coef de friction statique -->
+            <mu2 value="0.8"/> <!-- Coef de friction cinétique -->
+        </gazebo>
+    </xacro:macro>
+</robot>

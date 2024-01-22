@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<robot name="mon_robot_mecanum" xmlns:xacro="http://ros.org/wiki/xacro">
+    
+    <!-- DIMENSIONS -->
+        <!-- BASE -->
+        <xacro:property name="base_length" value="0.25" />
+        <xacro:property name="base_width" value="0.2" />  
+        <xacro:property name="base_thickness" value="0.003"/> 
+        <xacro:property name="base_mass" value="0.4"/> 
+
+        <!-- ROUES -->
+        <xacro:property name="mecanum_length" value="0.043" />
+        <xacro:property name="mecanum_radius" value="0.0325" />  
+        <xacro:property name="mecanum_mass" value="0.1"/> 
+
+        <!-- TIGES -->
+        <xacro:property name="tiges_length" value="0.1" />
+        <xacro:property name="tiges_radius" value="0.005" />  
+        <xacro:property name="tiges_mass" value="0.01"/> 
+
+        <!-- LiDAR -->
+        <xacro:property name="LiDAR_length" value="0.015" />
+        <xacro:property name="LiDAR_radius" value="0.028" />  
+        <xacro:property name="LiDAR_mass" value="0.1"/> 
+
+        <!-- CAMERA -->
+        <xacro:property name="camera_length" value="0.03" />    <!-- X -->
+        <xacro:property name="camera_width" value="0.02" />     <!-- Y -->
+        <xacro:property name="camera_thickness" value="0.03"/>  <!-- Z -->
+        <xacro:property name="camera_obj_length" value="0.01" /> <!-- Objectif -->
+        <xacro:property name="camera_obj_radius" value="0.01" />  
+        <xacro:property name="camera_mass" value="0.05"/>
+
+
+        <!-- AUTRES -->
+        <xacro:property name="h_AxeMoteur_Base" value="0.0165"/>
+
+
+    <!-- Include  -->
+    <xacro:include filename="outils.xacro"/>
+    <xacro:include filename="materials.xacro"/>
+    <xacro:include filename="base_robot.xacro"/>
+    <xacro:include filename="roue_mecanum.xacro"/>
+    <xacro:include filename="tiges.xacro"/>
+    
+
+
+    <!-- Lien 'world' qui est le parent de tous les autres liens -->
+    <link name="world_link"></link>
+
+    <!-- Joint fixe pour connecter la base au monde -->
+    <joint name="base_joint" type="fixed">
+        <origin xyz="1 1 0" rpy="0 0 0"/>
+        <parent link="world_link"/>
+        <child link="base_link"/>
+    </joint>
+
+    <!-- Base du robot -->
+    <xacro:base_robot link="base_link"> <!-- link -->
+        <origin xyz="0 0 ${mecanum_radius+h_AxeMoteur_Base+base_thickness/2}" rpy="0 0 0"/>
+    </xacro:base_robot>
+
+    <!-- LiDAR -->
+    <xacro:include filename="LiDAR.xacro"/>
+
+
+    <!-- Roues mécanum -->
+        <!-- Avant Gauche -->
+        <xacro:roue_mecanum name="roue_AvG"> <!-- link et joint -->
+            <origin xyz="-0.1225 0.0825 ${mecanum_radius}" rpy="0 ${pi/2} 0"/> <!-- approximatif -->
+        </xacro:roue_mecanum>
+
+        <!-- Avant Droite -->
+        <xacro:roue_mecanum name="roue_AvD"> <!-- link et joint -->
+            <origin xyz="0.1225 0.0825 ${mecanum_radius}" rpy="0 ${pi/2} 0"/> <!-- approximatif -->
+        </xacro:roue_mecanum>
+
+        <!-- Arrière Gauche -->
+        <xacro:roue_mecanum name="roue_ArG"> <!-- link et joint -->
+            <origin xyz="-0.1225 -0.0825 ${mecanum_radius}" rpy="0 ${pi/2} 0"/> <!-- approximatif -->
+        </xacro:roue_mecanum>
+        
+        <!-- Arrière Droit -->
+        <xacro:roue_mecanum name="roue_ArD"> <!-- link et joint -->
+            <origin xyz="0.1225 -0.0825 ${mecanum_radius}" rpy="0 ${pi/2} 0"/> <!-- approximatif -->
+        </xacro:roue_mecanum>
+
+    <!-- Tiges pour plateau 2 -->
+        <!-- Avant Gauche -->
+        <xacro:tiges name="tige_AvG"> <!-- link et joint -->
+            <origin xyz="0.09 0.115 ${mecanum_radius+h_AxeMoteur_Base+base_thickness+tiges_length/2}" rpy="0 0 0"/> <!-- approximatif -->
+        </xacro:tiges>
+
+        <!-- Avant Droit -->
+        <xacro:tiges name="tige_AvD"> <!-- link et joint -->
+            <origin xyz="-0.09 0.115 ${mecanum_radius+h_AxeMoteur_Base+base_thickness+tiges_length/2}" rpy="0 0 0"/> <!-- approximatif -->
+        </xacro:tiges>
+
+        <!-- Arrière Gauche -->
+        <xacro:tiges name="tige_ArG"> <!-- link et joint -->
+            <origin xyz="0.09 -0.115 ${mecanum_radius+h_AxeMoteur_Base+base_thickness+tiges_length/2}" rpy="0 0 0"/> <!-- approximatif -->
+        </xacro:tiges>
+
+        <!-- Arrière Droit -->
+        <xacro:tiges name="tige_ArD"> <!-- link et joint -->
+            <origin xyz="-0.09 -0.115 ${mecanum_radius+h_AxeMoteur_Base+base_thickness+tiges_length/2}" rpy="0 0 0"/> <!-- approximatif -->
+        </xacro:tiges>
+
+    <!-- Plateau 2 -->
+    <xacro:base_robot link="plateau2_link"> <!-- link -->
+        <origin xyz="0 0 ${mecanum_radius+h_AxeMoteur_Base+base_thickness*1.5+tiges_length}" rpy="0 0 0"/>
+    </xacro:base_robot>
+
+    <joint name="plateau2_joint" type="fixed">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <parent link="base_link"/>
+        <child link="plateau2_link"/>
+    </joint>
+
+    <!-- Caméra -->
+    <xacro:include filename="camera.xacro"/>
+
+</robot>

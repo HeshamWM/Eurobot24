@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="https://www.ros.org/wiki/xacro">
+
+    <xacro:macro name="base_robot" params="link *origin">
+        <link name="${link}">
+            <visual>
+                <geometry>
+                    <box size="${base_width} ${base_length} ${base_thickness}"/>
+                </geometry>
+                <xacro:insert_block name="origin"/> <!-- This will insert the origin block -->                
+                <material name="green"/>   <!--penser à bien mettre le xacro materials avant-->
+            </visual>
+
+            <collision>
+                <geometry>
+                    <box size="${base_width} ${base_length} ${base_thickness}"/>
+                <xacro:insert_block name="origin"/>
+                </geometry>
+            </collision>
+
+            <xacro:inertial_box mass="${base_mass}" x="${base_width}" y="${base_length}" z="${base_thickness}">
+                <xacro:insert_block name="origin"/>
+            </xacro:inertial_box>
+        </link>
+
+        <gazebo reference="${link}">
+            <material>Gazebo/Green</material>
+        </gazebo>
+    </xacro:macro>
+
+    
+</robot>
+
+
+<!-- Example of calling the macro -->
+<!--
+    <xacro:base_robot link="my_link">
+        <origin xyz="1 2 3" rpy="0 0 0"/>
+    </xacro:base_robot>
+-->

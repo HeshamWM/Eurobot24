@@ -1,0 +1,12 @@
+<!-- Description du plugin qu'on crée -->
+<library path="eurobot_hardware">
+    <!-- Déclaration d'une classe de plugin -->
+    <class name="eurobot_hardware/EurobotHardware"
+           type="debict::eurobot::hardware::EurobotHardware"
+           base_class_type="hardware_interface::SystemInterface">
+        <!-- Description de la classe -->
+        <description>
+            Hardware interface for eurobot
+        </description>
+    </class>
+</library>

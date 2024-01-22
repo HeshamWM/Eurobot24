@@ -1,0 +1,32 @@
+# Exemple de fichier de configuration controllers pour un robot mécanum
+
+joint_state_controller:
+  type: joint_state_controller/JointStateController
+  publish_rate: 50 #Hz
+
+mecanum_wheel_fl_velocity_controller:
+  type: velocity_controllers/JointVelocityController
+  joint: roue_AvG_joint
+  pid: {p: 1.0, i: 0.0, d: 0.0}
+
+mecanum_wheel_fr_velocity_controller:
+  type: velocity_controllers/JointVelocityController
+  joint: roue_AvD_joint
+  pid: {p: 1.0, i: 0.0, d: 0.0}
+
+mecanum_wheel_rl_velocity_controller:
+  type: velocity_controllers/JointVelocityController
+  joint: roue_ArG_joint
+  pid: {p: 1.0, i: 0.0, d: 0.0}
+
+mecanum_wheel_rr_velocity_controller:
+  type: velocity_controllers/JointVelocityController
+  joint: roue_ArD_joint
+  pid: {p: 1.0, i: 0.0, d: 0.0}
+
+mecanum_drive_controller:
+  type: differential_drive_controller/DifferentialDriveController
+  left_wheel: [roue_AvG_joint, roue_ArG_joint]
+  right_wheel: [roue_AvD_joint, roue_ArD_joint]
+  pose_covariance_diagonal: [0.001, 0.001, 1000000.0, 1000000.0, 1000000.0, 1000000.0]
+  twist_covariance_diagonal: [0.001, 0.001, 1000000.0, 1000000.0, 1000000.0, 1000000.0]

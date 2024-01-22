@@ -1,0 +1,20 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 100  # Hz ; fréquence de MàJ
+
+    joint_state_controller:
+      type: joint_state_controller/JointStateController
+
+    eurobot_drive_controller:
+      type: eurobot_controller/EurobotDriveController
+
+eurobot_drive_controller:
+  ros__parameters:
+    roue_AvG_joint_name: roue_AvG_joint
+    roue_AvD_joint_name: roue_AvD_joint
+    roue_ArG_joint_name: roue_ArG_joint
+    roue_ArD_joint_name: roue_ArD_joint
+    wheel_radius: 0.0325
+    wheel_distance:
+      width: 0.2
+      length: 0.1
