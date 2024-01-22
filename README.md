@@ -1,2 +1,2 @@
 # Eurobot24
-RAM Master Mécatronique UNISTRA
+Mobile autonomous robot, master's project, University of Strasbourg. Hardware and software design.
