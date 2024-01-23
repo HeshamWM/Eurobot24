@@ -29,8 +29,9 @@
             </xacro:inertial_cylinder>
         </link>
 
+        <!-- Simulation du LiDAR -->
         <gazebo reference='LiDAR_link'>
-            <!-- <material>Gazebo/Yellow</material> -->
+            <material>Gazebo/Yellow</material>
             <sensor name="laser" type="ray">
                 <pose> 0 0 0 0 0 0 </pose>
                 <visualize>true</visualize>

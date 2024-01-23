@@ -81,8 +81,9 @@
       <inertia ixx="2.1475000000000004e-05" ixy="0.0" ixz="0.0" iyy="2.1475000000000004e-05" iyz="0.0" izz="3.9200000000000004e-05"/>
     </inertial>
   </link>
+  <!-- Simulation du LiDAR -->
   <gazebo reference="LiDAR_link">
-    <!-- <material>Gazebo/Yellow</material> -->
+    <material>Gazebo/Yellow</material>
     <sensor name="laser" type="ray">
       <pose> 0 0 0 0 0 0 </pose>
       <visualize>true</visualize>
